@@ -15,9 +15,8 @@ To Use:
     can reset the raids.
     
 Notes:
-
-A.  Your city names must be unique and not contain spaces
-B.  Requires Tampermonkey to run
+1.  Your city names must be unique and not contain spaces
+2.  Requires Tampermonkey to run
 
 To install:
 

@@ -8,7 +8,7 @@ To Use:
 1.  Go to Overviews - Raid Reports - Reports.  At the bottom of the screen you'll see:
       Hours to Scan:  How far back to scan.  Default 5 hours.
       Threshold (%):  What percentage carry you want to check for.  Default 100%.
-      Scan:  Scan the reports and extract the name of the cities where raids need to be reset.
+      Scan Button:    Scan the reports and extract the name of the cities where raids need to be reset.
   
 2.  Back in game - The DLCheck button is at the bottom of the screen next to the date/time.
     The window shows you a list of cities.  Click on the city name to go to city where you

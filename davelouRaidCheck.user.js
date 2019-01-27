@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.4.0
+// @version      0.4.2
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -50,12 +50,27 @@
                 var look = 2;
                 var res = {};
                 var hh = 0
+                var mm = 0
                 $('#repbod span').each(function(index, elem){
                     count++;
                     if (look) {
                         var txt = $(this).text();
-                        //console.log(txt)
                         var ala = txt.match(/ \((\d..):(\d..)\) .(\d+)%. From (.*) \[\d+% Lost.*\[(\d+)% Carry..(\d\d):(\d\d):/)
+                        if (look == 2) {
+                            look = 1
+                            hh = ala[6] - hours
+                            if (hh < 0) {
+                                hh = 24+hh
+                            }
+                            mm = ala[7]
+                        } else if (look == 1) {
+                            if (ala[6] <= hh) {
+                                if (ala[7] <= mm) {
+                                    look = 0
+                                    return false;
+                                }
+                            }
+                        }
                         if (ala[5] < thresh && ala[3] > 5 ) {
                             var idx = ala[4]+" "+ala[1]+":"+ala[2]
                             if (!res[idx]) {
@@ -63,24 +78,10 @@
                                 found++;
                             }
                         }
-                        if (look == 2) {
-                            look = 1
-                            hh = ala[6] - hours
-                            if (hh < 0) {
-                                hh = 24+hh
-                            }
-                            //console.log("scan back to "+hh+":00")
-                        } else if (look == 1) {
-                            if (ala[6] == hh) {
-                                look = 0
-                                return false;
-                            }
-                        }
                     }
                 })
                 localStorage.setItem("dlcheck", JSON.stringify(res))
                 var dt = "Time: "+new Date().toLocaleTimeString()+" Scanned: "+count+" Found: "+found;
-                //console.log(dt)
                 $('#dlchb').text(dt);
             })
         }
@@ -109,7 +110,7 @@
                 $('#dlchb').dialog("moveToTop");
             })
 
-            var popup = '<div id="dlchb" title="DL Raid Check" style="overflow:hidden scroll;"><div style="height:300px"><div id="dlchle" style="width:49%;display:inline-block"></div><div id="dlchri" style="width:49%;display:inline-block"></div></div></div>'
+            var popup = '<div id="dlchb" title="DL Raid Check" style="overflow:hidden scroll;"><div style="height:300px;"><div id="dlchle" style="width:49%;display:inline-block"></div><div id="dlchri" style="width:49%;display:inline-block"></div></div></div>'
 
             $("body").append(popup);
 
@@ -162,7 +163,6 @@
         }
 
         function loadPref() {
-            //console.log("loadpref")
             var list = JSON.parse(localStorage.getItem("dlchpref"));
             if (list) {
                 hours = list.hours;
@@ -176,7 +176,6 @@
             }
         }
         function savePref() {
-            //console.log("savepref")
             var res = {}
             res.hours = hours = $('#dlchhh').val();
             res.thresh = thresh = $('#dlchth').val();

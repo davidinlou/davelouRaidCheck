@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    http://tampermonkey.net/
-// @version      0.3
+// @version      0.3.1
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -87,7 +87,7 @@
                     cl = false;
                     $.each(ppdt.c, function(a,b) {
                         var name = b[2].split(" ")[0];
-                        var val = b[1].value;
+                        var val = b[1];
                         cm[name] = val;
                     })
                 }

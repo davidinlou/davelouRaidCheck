@@ -32,7 +32,7 @@
             dlbutton += '<label style="margin:5px;">DLCheck</label><span style="margin-left:10px;">Hours to scan:</span>'
             dlbutton += '<select id="dlchhh" class="btn btn-primary btn-xs" style="margin:2px;"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select>'
             dlbutton += '<span style="margin-left:10px;">Threshold(%):</span>'
-            dlbutton += '<select id="dlchth" class="btn btn-primary btn-xs" style="margin:2px;"><option>80</option><option>85</option><option>90</option><option>95</option><option>100</option><option>105</option><option>110</option><option>115</option></select>'
+            dlbutton += '<select id="dlchth" class="btn btn-primary btn-xs" style="margin:2px;"><option>75</option><option>80</option><option>85</option><option>90</option><option>95</option><option>100</option><option>105</option><option>110</option><option>115</option><option>120</option><option>125</option></select>'
             dlbutton += '<button id="dlchs" type="button" class="btn btn-primary btn-xs" style="margin-left:15px">Scan</button>'
             dlbutton += '<span id="dlchb" style="margin-left:15px"></span></div>';
 

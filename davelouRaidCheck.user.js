@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.3.3
+// @version      0.4.0
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -30,13 +30,19 @@
 
             var dlbutton = '<div style="margin:15px">'
             dlbutton += '<label style="margin:5px;">DLCheck</label><span style="margin-left:10px;">Hours to scan:</span>'
-            dlbutton += '<select id="dlchhh" class="btn btn-primary btn-xs" style="margin:2px;"><option>1</option><option>2</option><option>3</option><option>4</option><option selected="selected">5</option><option>6</option><option>7</option><option>8</option></select>'
+            dlbutton += '<select id="dlchhh" class="btn btn-primary btn-xs" style="margin:2px;"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select>'
             dlbutton += '<span style="margin-left:10px;">Threshold(%):</span>'
-            dlbutton += '<select id="dlchth" class="btn btn-primary btn-xs" style="margin:2px;"><option>80</option><option>85</option><option>90</option><option>95</option><option selected="selected">100</option><option>105</option><option>110</option><option>115</option></select>'
+            dlbutton += '<select id="dlchth" class="btn btn-primary btn-xs" style="margin:2px;"><option>80</option><option>85</option><option>90</option><option>95</option><option>100</option><option>105</option><option>110</option><option>115</option></select>'
             dlbutton += '<button id="dlchs" type="button" class="btn btn-primary btn-xs" style="margin-left:15px">Scan</button>'
             dlbutton += '<span id="dlchb" style="margin-left:15px"></span></div>';
 
             $('#rdetadiv').append(dlbutton)
+
+            var hours=5
+            var thresh=100
+            loadPref()
+            $('#dlchhh').click(savePref);
+            $('#dlchth').click(savePref);
 
             $('#dlchs').click(function(){
                 var count =0
@@ -44,8 +50,6 @@
                 var look = 2;
                 var res = {};
                 var hh = 0
-                var hours = $('#dlchhh').val();
-                var thresh = $('#dlchth').val();
                 $('#repbod span').each(function(index, elem){
                     count++;
                     if (look) {
@@ -65,15 +69,18 @@
                             if (hh < 0) {
                                 hh = 24+hh
                             }
-                            console.log("scan back to "+hh+":00")
+                            //console.log("scan back to "+hh+":00")
                         } else if (look == 1) {
-                            if (ala[6] == hh) look = 0
+                            if (ala[6] == hh) {
+                                look = 0
+                                return false;
+                            }
                         }
                     }
                 })
                 localStorage.setItem("dlcheck", JSON.stringify(res))
                 var dt = "Time: "+new Date().toLocaleTimeString()+" Scanned: "+count+" Found: "+found;
-                console.log(dt)
+                //console.log(dt)
                 $('#dlchb').text(dt);
             })
         }
@@ -93,6 +100,7 @@
                         cm[name] = val;
                     })
                 }
+                $('.dlchl').unbind("click",dlgoto)
                 generate()
                 $('#dlchle').html(le);
                 $('#dlchri').html(ri);
@@ -153,9 +161,27 @@
             $("#cityDropdownMenu").val(id).change();
         }
 
-        //var fn = '<script type="text/javascript">function dlgoto(id) {$("#dlch"+id).css("color","#303020"); $("#organiser").val("all").change(); $("#cityDropdownMenu").val(id).change();}</script>}'
-
-        //$('head').append(fn);
+        function loadPref() {
+            //console.log("loadpref")
+            var list = JSON.parse(localStorage.getItem("dlchpref"));
+            if (list) {
+                hours = list.hours;
+                thresh = list.thresh;
+                $('#dlchhh').val(hours);
+                $('#dlchth').val(thresh);
+            } else {
+                $('#dlchhh').val(hours);
+                $('#dlchth').val(thresh);
+                savePref();
+            }
+        }
+        function savePref() {
+            //console.log("savepref")
+            var res = {}
+            res.hours = hours = $('#dlchhh').val();
+            res.thresh = thresh = $('#dlchth').val();
+            localStorage.setItem("dlchpref", JSON.stringify(res))
+        }
     }
 
     dlcheckinit();

@@ -18,8 +18,9 @@ Notes:
 1.  Your city names must be unique and not contain spaces
 2.  Requires Tampermonkey to run
 
-To install:
+To install/upgrade:
 
-1.  Download script and load it into any editor.  Then Select All and Copy
-2.  In TamperMonkey, create a new script (+ sign on dashboard) and delete generated text.
-3.  Paste previously copied script and then File - Save.
+1.  Click on davelouRaidCheck.user.js script
+2.  Click on Raw
+3.  Tampermonkey will ask if you want to install/upgrade
+

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.5.8
+// @version      0.5.9
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*

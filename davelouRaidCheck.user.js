@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.4.2
+// @version      0.4.3
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -56,22 +56,26 @@
                     if (look) {
                         var txt = $(this).text();
                         var ala = txt.match(/ \((\d..):(\d..)\) .(\d+)%. From (.*) \[\d+% Lost.*\[(\d+)% Carry..(\d\d):(\d\d):/)
+                        var h1 = ala[6] + 0
+                        var m1 = ala[7] + 0
+                        var t1 = ala[5] + 0
+                        var c1 = ala[3] + 0
                         if (look == 2) {
                             look = 1
-                            hh = ala[6] - hours
+                            hh = h1 - hours
                             if (hh < 0) {
                                 hh = 24+hh
                             }
-                            mm = ala[7]
+                            mm = m1
                         } else if (look == 1) {
-                            if (ala[6] <= hh) {
-                                if (ala[7] <= mm) {
+                            if (h1 <= hh) {
+                                if (m1 <= mm) {
                                     look = 0
                                     return false;
                                 }
                             }
                         }
-                        if (ala[5] < thresh && ala[3] > 5 ) {
+                        if (t1 < thresh && c1 > 5 ) {
                             var idx = ala[4]+" "+ala[1]+":"+ala[2]
                             if (!res[idx]) {
                                 res[idx] = [ala[1], ala[2], ala[3], ala[4], ala[5], ala[6], ala[7]]

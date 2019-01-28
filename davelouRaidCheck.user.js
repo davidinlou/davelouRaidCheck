@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.5.4
+// @version      0.5.5
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -54,12 +54,14 @@
                 var hh = 0
                 var mm = 0
                 var mn = false
+                var txt = "";
                 try {
                     $('#repbod span').each(function(index, elem){
                         count++;
                         if (look) {
-                            var txt = $(this).text();
+                            txt = $(this).text();
                             var ala = txt.match(/ \((\d..):(\d..)\) .(\d+)%. From (.*) \[\d+% Lost.*\[(\d+)% Carry..(\d\d):(\d\d):/)
+                            delete(ala)
                             var h1 = Number(ala[6])
                             var m1 = Number(ala[7])
                             var c1 = Number(ala[5])
@@ -100,6 +102,7 @@
                 } catch (err) {
                     $('#dlchb').text("Error: "+err);
                     console.log(err)
+                    console.log(txt)
                 }
             })
 

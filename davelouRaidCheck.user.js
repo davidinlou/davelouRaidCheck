@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.5.0
+// @version      0.5.1
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -30,9 +30,9 @@
 
             var dlbutton = '<div style="margin:15px">'
             dlbutton += '<label style="margin:5px;">DLCheck</label><span style="margin-left:10px;">Hours to scan:</span>'
-            dlbutton += '<select id="dlchhh" class="btn btn-primary btn-xs" style="margin:2px;"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select>'
+            dlbutton += '<select id="dlchhh" class="btn btn-primary btn-xs" style="margin:2px;"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option><option>9</option><option>10</option></select>'
             dlbutton += '<span style="margin-left:10px;">Threshold(%):</span>'
-            dlbutton += '<select id="dlchth" class="btn btn-primary btn-xs" style="margin:2px;"><option>75</option><option>80</option><option>85</option><option>90</option><option>95</option><option>100</option><option>105</option><option>110</option><option>115</option><option>120</option><option>125</option></select>'
+            dlbutton += '<select id="dlchth" class="btn btn-primary btn-xs" style="margin:2px;"><option>50</option><option>70</option><option>80</option><option>90</option><option>95</option><option>100</option><option>105</option><option>110</option><option>120</option><option>130</option><option>150</option></select>'
             dlbutton += '<button id="dlchs" type="button" class="btn btn-primary btn-xs" style="margin-left:15px">Scan</button>'
             dlbutton += '<span id="dlchb" style="margin-left:15px"></span></div>';
 
@@ -72,7 +72,7 @@
                         } else if (look == 1) {
                             if (mn) {
                                 //scan past midnight
-                                if (h1>15) mn = false
+                                if (h1>12) mn = false
                             } else {
                                 if (h1 <= hh) {
                                     if (m1 <= mm) {

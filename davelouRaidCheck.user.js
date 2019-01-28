@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.5.5
+// @version      0.5.6
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -99,7 +99,7 @@
                     var dt = "Time: "+new Date().toLocaleTimeString()+" Scanned: "+count+" Found: "+found;
                     $('#dlchb').text(dt);
                 } catch (err) {
-                    $('#dlchb').text("Error: "+err);
+                    $('#dlchb').text("Err: "+err);
                     console.log(err)
                     console.log(txt)
                 }
@@ -114,22 +114,29 @@
             var dlc = $('#worldtime').after(dlch)
 
             $('#dlpw').click(function(){
-                if (cl) {
-                    cl = false;
-                    $.each(ppdt.c, function(a,b) {
-                        var name = b[2].split(" - ")[0];
-                        var val = b[1];
-                        cm[name] = val;
-                    })
-                    //console.log(cm)
+                try {
+                    if (cl) {
+                        cl = false;
+                        $.each(ppdt.c, function(a,b) {
+                            var name = b[2].split(" - ")[0];
+                            var val = b[1];
+                            cm[name] = val;
+                        })
+                        //console.log(cm)
+                    }
+                    $('.dlchl').unbind("click",dlgoto)
+                    generate()
+                    $('#dlchle').html(le);
+                    $('#dlchri').html(ri);
+                    $('.dlchl').click(dlgoto)
+                    $('#dlchb').dialog("open");
+                    $('#dlchb').dialog("moveToTop");
+                } catch (err) {
+                    $('#dlchle').html("Err: "+err);
+                    $('#dlchb').dialog("open");
+                    $('#dlchb').dialog("moveToTop");
+                    console.log(err)
                 }
-                $('.dlchl').unbind("click",dlgoto)
-                generate()
-                $('#dlchle').html(le);
-                $('#dlchri').html(ri);
-                $('.dlchl').click(dlgoto)
-                $('#dlchb').dialog("open");
-                $('#dlchb').dialog("moveToTop");
             })
 
             var popup = '<div id="dlchb" title="DL Raid Check" style="overflow:hidden scroll;"><div style="height:300px;"><div id="dlchle" style="width:49%;display:inline-block"></div><div id="dlchri" style="width:49%;display:inline-block"></div></div></div>'

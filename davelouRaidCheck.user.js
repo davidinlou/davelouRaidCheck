@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.5.2
+// @version      0.5.4
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -45,6 +45,8 @@
             $('#dlchth').click(savePref);
 
             $('#dlchs').click(function(){
+                $('#dlchb').text("Scan running...");
+
                 var count =0
                 var found = 0
                 var look = 2;
@@ -52,49 +54,55 @@
                 var hh = 0
                 var mm = 0
                 var mn = false
-                $('#repbod span').each(function(index, elem){
-                    count++;
-                    if (look) {
-                        var txt = $(this).text();
-                        var ala = txt.match(/ \((\d..):(\d..)\) .(\d+)%. From (.*) \[\d+% Lost.*\[(\d+)% Carry..(\d\d):(\d\d):/)
-                        var h1 = Number(ala[6])
-                        var m1 = Number(ala[7])
-                        var c1 = Number(ala[5])
-                        var p1 = Number(ala[3])
-                        if (look == 2) {
-                            look = 1
-                            hh = h1 - hours
-                            if (hh < 0) {
-                                hh = 24+hh
-                                mn = true;
-                            }
-                            mm = m1
-                        } else if (look == 1) {
-                            if (mn) {
-                                //scan past midnight
-                                if (h1>12) mn = false
-                            } else {
-                                if (h1 <= hh) {
-                                    if (m1 <= mm) {
-                                        look = 0
-                                        return false;
+                try {
+                    $('#repbod span').each(function(index, elem){
+                        count++;
+                        if (look) {
+                            var txt = $(this).text();
+                            var ala = txt.match(/ \((\d..):(\d..)\) .(\d+)%. From (.*) \[\d+% Lost.*\[(\d+)% Carry..(\d\d):(\d\d):/)
+                            var h1 = Number(ala[6])
+                            var m1 = Number(ala[7])
+                            var c1 = Number(ala[5])
+                            var p1 = Number(ala[3])
+                            if (look == 2) {
+                                look = 1
+                                hh = h1 - hours
+                                if (hh < 0) {
+                                    hh = 24+hh
+                                    mn = true;
+                                }
+                                mm = m1
+                            } else if (look == 1) {
+                                if (mn) {
+                                    //scan past midnight
+                                    if (h1>12) mn = false
+                                } else {
+                                    if (h1 <= hh) {
+                                        if (m1 <= mm) {
+                                            look = 0
+                                            return false;
+                                        }
                                     }
                                 }
                             }
-                        }
-                        if (c1 < thresh && p1 > 5 ) {
-                            var idx = ala[4]+" "+ala[1]+":"+ala[2]
-                            if (!res[idx]) {
-                                res[idx] = [ala[1], ala[2], ala[3], ala[4], ala[5], ala[6], ala[7]]
-                                found++;
+                            if (c1 < thresh && p1 > 5 ) {
+                                var idx = ala[4]+" "+ala[1]+":"+ala[2]
+                                if (!res[idx]) {
+                                    res[idx] = [ala[1], ala[2], ala[3], ala[4], ala[5], ala[6], ala[7]]
+                                    found++;
+                                }
                             }
                         }
-                    }
-                })
-                localStorage.setItem("dlcheck", JSON.stringify(res))
-                var dt = "Time: "+new Date().toLocaleTimeString()+" Scanned: "+count+" Found: "+found;
-                $('#dlchb').text(dt);
+                    })
+                    localStorage.setItem("dlcheck", JSON.stringify(res))
+                    var dt = "Time: "+new Date().toLocaleTimeString()+" Scanned: "+count+" Found: "+found;
+                    $('#dlchb').text(dt);
+                } catch (err) {
+                    $('#dlchb').text("Error: "+err);
+                    console.log(err)
+                }
             })
+
         }
 
         var cm = {}
@@ -111,7 +119,7 @@
                         var val = b[1];
                         cm[name] = val;
                     })
-                    console.log(cm)
+                    //console.log(cm)
                 }
                 $('.dlchl').unbind("click",dlgoto)
                 generate()

@@ -60,6 +60,7 @@
                         count++;
                         if (look) {
                             txt = $(this).text();
+                            txt = txt.replace(/-/,"")
                             var ala = txt.match(/ \((\d*)%\) From (.*) \[\d*% Lost.*\[(\d*)% Carry..(\d*):(\d*):/)
                             var p1 = Number(ala[1])
                             var n1 = ala[2]

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.4.3
+// @version      0.4.4
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -58,24 +58,27 @@
                         var ala = txt.match(/ \((\d..):(\d..)\) .(\d+)%. From (.*) \[\d+% Lost.*\[(\d+)% Carry..(\d\d):(\d\d):/)
                         var h1 = Number(ala[6])
                         var m1 = Number(ala[7])
-                        var t1 = Number(ala[5])
-                        var c1 = Number(ala[3])
+                        var c1 = Number(ala[5])
+                        var p1 = Number(ala[3])
+                        console.log(p1)
                         if (look == 2) {
                             look = 1
                             hh = h1 - hours
                             if (hh < 0) {
                                 hh = 24+hh
                             }
+                            //console.log(hh)
                             mm = m1
                         } else if (look == 1) {
-                            if (h1 <= hh) {
+                            if (h1 == hh) {
                                 if (m1 <= mm) {
                                     look = 0
                                     return false;
                                 }
                             }
                         }
-                        if (t1 < thresh && c1 > 5 ) {
+                        console.log(thresh)
+                        if (c1 < thresh && p1 > 5 ) {
                             var idx = ala[4]+" "+ala[1]+":"+ala[2]
                             if (!res[idx]) {
                                 res[idx] = [ala[1], ala[2], ala[3], ala[4], ala[5], ala[6], ala[7]]
@@ -169,8 +172,8 @@
         function loadPref() {
             var list = JSON.parse(localStorage.getItem("dlchpref"));
             if (list) {
-                hours = list.hours;
-                thresh = list.thresh;
+                hours = Number(list.hours);
+                thresh = Number(list.thresh);
                 $('#dlchhh').val(hours);
                 $('#dlchth').val(thresh);
             } else {
@@ -181,8 +184,8 @@
         }
         function savePref() {
             var res = {}
-            res.hours = hours = $('#dlchhh').val();
-            res.thresh = thresh = $('#dlchth').val();
+            res.hours = hours = Number($('#dlchhh').val());
+            res.thresh = thresh = Number($('#dlchth').val());
             localStorage.setItem("dlchpref", JSON.stringify(res))
         }
     }

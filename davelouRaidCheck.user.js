@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.5.6
+// @version      0.5.7
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -60,7 +60,7 @@
                         count++;
                         if (look) {
                             txt = $(this).text();
-                            var ala = txt.match(/ \((\d..):(\d..)\) .(\d+)%. From (.*) \[\d+% Lost.*\[(\d+)% Carry..(\d\d):(\d\d):/)
+                            var ala = txt.match(/ \((\d*):(\d*)\) .(\d*)%. From (.*) \[\d*% Lost.*\[(\d*)% Carry..(\d*):(\d*):/)
                             var h1 = Number(ala[6])
                             var m1 = Number(ala[7])
                             var c1 = Number(ala[5])
@@ -73,6 +73,7 @@
                                     mn = true;
                                 }
                                 mm = m1
+                                console.log(txt)
                             } else if (look == 1) {
                                 if (mn) {
                                     //scan past midnight

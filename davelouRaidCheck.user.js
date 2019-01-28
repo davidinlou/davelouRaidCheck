@@ -56,10 +56,10 @@
                     if (look) {
                         var txt = $(this).text();
                         var ala = txt.match(/ \((\d..):(\d..)\) .(\d+)%. From (.*) \[\d+% Lost.*\[(\d+)% Carry..(\d\d):(\d\d):/)
-                        var h1 = ala[6] + 0
-                        var m1 = ala[7] + 0
-                        var t1 = ala[5] + 0
-                        var c1 = ala[3] + 0
+                        var h1 = Number(ala[6])
+                        var m1 = Number(ala[7])
+                        var t1 = Number(ala[5])
+                        var c1 = Number(ala[3])
                         if (look == 2) {
                             look = 1
                             hh = h1 - hours

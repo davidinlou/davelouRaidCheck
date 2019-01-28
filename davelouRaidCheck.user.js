@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.4.4
+// @version      0.4.5
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -60,14 +60,12 @@
                         var m1 = Number(ala[7])
                         var c1 = Number(ala[5])
                         var p1 = Number(ala[3])
-                        console.log(p1)
                         if (look == 2) {
                             look = 1
                             hh = h1 - hours
                             if (hh < 0) {
                                 hh = 24+hh
                             }
-                            //console.log(hh)
                             mm = m1
                         } else if (look == 1) {
                             if (h1 == hh) {
@@ -77,7 +75,6 @@
                                 }
                             }
                         }
-                        console.log(thresh)
                         if (c1 < thresh && p1 > 5 ) {
                             var idx = ala[4]+" "+ala[1]+":"+ala[2]
                             if (!res[idx]) {

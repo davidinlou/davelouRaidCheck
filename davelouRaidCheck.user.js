@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.5.7
+// @version      0.5.8
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -60,11 +60,14 @@
                         count++;
                         if (look) {
                             txt = $(this).text();
-                            var ala = txt.match(/ \((\d*):(\d*)\) .(\d*)%. From (.*) \[\d*% Lost.*\[(\d*)% Carry..(\d*):(\d*):/)
-                            var h1 = Number(ala[6])
-                            var m1 = Number(ala[7])
-                            var c1 = Number(ala[5])
-                            var p1 = Number(ala[3])
+                            var ala = txt.match(/ \((\d*)%\) From (.*) \[\d*% Lost.*\[(\d*)% Carry..(\d*):(\d*):/)
+                            var p1 = Number(ala[1])
+                            var n1 = ala[2]
+                            var c1 = Number(ala[3])
+                            var h0 = ala[4]
+                            var h1 = Number(h0)
+                            var m0 = ala[5]
+                            var m1 = Number(m0)
                             if (look == 2) {
                                 look = 1
                                 hh = h1 - hours
@@ -73,7 +76,6 @@
                                     mn = true;
                                 }
                                 mm = m1
-                                console.log(txt)
                             } else if (look == 1) {
                                 if (mn) {
                                     //scan past midnight
@@ -88,15 +90,27 @@
                                 }
                             }
                             if (c1 < thresh && p1 > 5 ) {
-                                var idx = ala[4]+" "+ala[1]+":"+ala[2]
-                                if (!res[idx]) {
-                                    res[idx] = [ala[1], ala[2], ala[3], ala[4], ala[5], ala[6], ala[7]]
+                                var idx = n1
+                                if (!res[n1]) {
+                                    res[n1] = [n1, p1, c1, h0, m0]
                                     found++;
+                                } else {
+                                    var old = res[n1]
+                                    if (c1 < old[2]) {
+                                        res[n1] = [n1, p1, c1, h0, m0]
+                                    }
                                 }
                             }
                         }
                     })
-                    localStorage.setItem("dlcheck", JSON.stringify(res))
+                    var srt = []
+                    $.each(res,function(a,b) {
+                        srt.push(b)
+                    })
+                    srt.sort(function(a,b){
+                        return a[2] - b[2];
+                    })
+                    localStorage.setItem("dlcheck", JSON.stringify(srt))
                     var dt = "Time: "+new Date().toLocaleTimeString()+" Scanned: "+count+" Found: "+found;
                     $('#dlchb').text(dt);
                 } catch (err) {
@@ -175,12 +189,13 @@
         }
 
         function proc(key, value) {
-            var val = cm[value[3]];
+            var name = value[0]
+            var val = cm[name];
             var y = Math.floor(val/65536);
             var x = val % 65536
-            var li = "<li class='cityblink dlchl' id='dlch"+val+"' >"+value[3] + " ("+x+":"+y+")</li>"
+            var li = "<li class='cityblink dlchl' id='dlch"+val+"' >"+name + " ("+x+":"+y+")</li>"
             le += li
-            li = "<li >Pr "+value[2] + "% Ca "+value[4]+"% "+value[5]+":"+value[6]+"</li>"
+            li = "<li >Pr "+value[1] + "% Ca "+value[2]+"% "+value[3]+":"+value[4]+"</li>"
             ri += li
         }
 

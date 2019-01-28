@@ -61,7 +61,6 @@
                         if (look) {
                             txt = $(this).text();
                             var ala = txt.match(/ \((\d..):(\d..)\) .(\d+)%. From (.*) \[\d+% Lost.*\[(\d+)% Carry..(\d\d):(\d\d):/)
-                            delete(ala)
                             var h1 = Number(ala[6])
                             var m1 = Number(ala[7])
                             var c1 = Number(ala[5])

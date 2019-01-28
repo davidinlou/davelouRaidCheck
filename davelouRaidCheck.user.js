@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.4.5
+// @version      0.5.0
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -51,6 +51,7 @@
                 var res = {};
                 var hh = 0
                 var mm = 0
+                var mn = false
                 $('#repbod span').each(function(index, elem){
                     count++;
                     if (look) {
@@ -65,13 +66,19 @@
                             hh = h1 - hours
                             if (hh < 0) {
                                 hh = 24+hh
+                                mn = true;
                             }
                             mm = m1
                         } else if (look == 1) {
-                            if (h1 == hh) {
-                                if (m1 <= mm) {
-                                    look = 0
-                                    return false;
+                            if (mn) {
+                                //scan past midnight
+                                if (h1>15) mn = false
+                            } else {
+                                if (h1 <= hh) {
+                                    if (m1 <= mm) {
+                                        look = 0
+                                        return false;
+                                    }
                                 }
                             }
                         }

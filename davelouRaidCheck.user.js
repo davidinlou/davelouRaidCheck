@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         davelouRaidCheck
 // @namespace    https://github.com/davidinlou/davelouRaidCheck/
-// @version      0.5.1
+// @version      0.5.2
 // @description  checks reports for raids that need to be reset
 // @author       davelou
 // @match        https://*.crownofthegods.com/o*
@@ -107,10 +107,11 @@
                 if (cl) {
                     cl = false;
                     $.each(ppdt.c, function(a,b) {
-                        var name = b[2].split(" ")[0];
+                        var name = b[2].split(" - ")[0];
                         var val = b[1];
                         cm[name] = val;
                     })
+                    console.log(cm)
                 }
                 $('.dlchl').unbind("click",dlgoto)
                 generate()
@@ -169,7 +170,7 @@
             var id = event.target.id;
             $("#"+id).css("color","#707070");
             $("#organiser").val("all").change();
-            id = id.substring(4)
+            id = Number(id.substring(4))
             $("#cityDropdownMenu").val(id).change();
         }
 

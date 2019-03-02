@@ -3,6 +3,9 @@ CotG raid report check
 
 This script scans your raid reports to extract raids with less than 100% carry, then presents you with a list of cities that need raids resetting.
 
+![alt text](https://raw.githubusercontent.com/davidinlou/davelouRaidCheck/master/dlch.png)
+
+
 To Use:
 
 1.  Go to Overviews - Raid Reports - Reports.  At the bottom of the screen you'll see:

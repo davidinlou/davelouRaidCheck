@@ -10,13 +10,16 @@ To Use:
     - Threshold (%):  What percentage carry you want to check for.  Default 100%.
     - Scan Button:    Scan the reports and extract the name of the cities where raids need to be reset.
   
-2.  Back in game - The DLCheck button is at the bottom of the screen next to the date/time.
-    The window shows you a list of cities.  Click on the city name to go to city where you
-    can reset the raids.
+2.  Back in game - 
+    - The DLCheck button is at the bottom of the screen next to the date/time.
+    - The window shows you a list of cities.  
+    - Click on the city name to go to city where you can reset the raids.
     
 Notes:
 1.  Your city names must be unique and not contain " - " (space,dash,space)
 2.  Requires Tampermonkey to run
+3.  City list may appear under other popup windows
+4.  City list will stay in place when you change cities
 
 To install/upgrade:
 

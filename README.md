@@ -1,7 +1,7 @@
 # davelouRaidCheck
 CotG raid report check
 
-This script scans your raid reports to extract raids with less than 100% carry, then presents you with a list of cities that need raids resetting.  Requires TamperMonkey.
+This script scans your raid reports to extract raids with less than 100% carry, then presents you with a list of cities which need raids resetting.  Requires TamperMonkey to work.
 
 ![alt text](https://raw.githubusercontent.com/davidinlou/davelouRaidCheck/master/dlch.png)
 
@@ -20,7 +20,7 @@ To Use:
     
 Notes:
 1.  Your city names must be unique and not contain " - " (space,dash,space)
-2.  Requires Tampermonkey to run because add-on scripts don't work on Overviews
+2.  Requires Tampermonkey to run because add-on scripts don't work in Overviews
 3.  City list may appear under other popup windows
 4.  City list will stay in place when you change cities
 

@@ -7,20 +7,21 @@ This script scans your raid reports to extract raids with less than 100% carry, 
 
 
 To Use:
-
-1.  Go to Overviews - Raid Reports - Reports.  At the bottom of the screen you'll see:
-    - Hours to Scan:  How far back to scan.  Default 5 hours.
+ 
+1.  Click the DLCheck button at the bottom of the screen.  Popup window shows
+    - Hours:  How far back to scan the reports.  Default 5 hours.
     - Threshold (%):  What percentage carry you want to check for.  Default 100%.
     - Scan Button:    Scan the reports and extract the name of the cities where raids need to be reset.
-  
-2.  Back in game - 
-    - The DLCheck button is at the bottom of the screen next to the date/time.
+    
+1. Click Scan button to scan reports
     - The window shows you a list of cities.  
     - Click on the city name to go to city where you can reset the raids.
     
+    
 Notes:
-1.  Your city names must be unique and not contain " - " (space,dash,space)
-2.  Requires Tampermonkey to run because add-on scripts don't work in Overviews
+1.  Your city names must be unique because the reports data does not have the city coords.
+2.  City names can't contain " - " (space,dash,space) because I that's also used for the Notes delimiter
+2.  Requires Tampermonkey to run
 3.  City list may appear under other popup windows
 4.  City list will stay in place when you change cities
 
